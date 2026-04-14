@@ -1,0 +1,503 @@
+{
+  "_doc": {
+    "purpose": "Single source of truth for the 'second brain' decision-support project. Edited collaboratively across sessions. Diffable, versionable, and consumable by both humans and LLMs as context for future design and build conversations.",
+    "edit_protocol": "When changing a field, bump meta.version, add a changelog entry with date + what changed + why, and (for revisions of load-bearing facts) move the old value into _superseded with a note. Never silently overwrite.",
+    "field_status_legend": {
+      "confirmed": "User stated this directly and it has not been challenged",
+      "revised": "User changed an earlier answer; old value preserved in _superseded",
+      "inferred": "Derived from user statements but not explicitly confirmed",
+      "open": "Not yet answered or deliberately deferred",
+      "untested": "Stated as belief but not validated against evidence"
+    }
+  },
+
+  "meta": {
+    "project_codename": "second-brain",
+    "version": "0.1.0",
+    "created": "2026-04-14",
+    "updated": "2026-04-14",
+    "schema_version": 1,
+    "changelog": [
+      {
+        "version": "0.1.0",
+        "date": "2026-04-14",
+        "summary": "Initial spec extracted from Phase 1-4 interview. Captures pain, constraints, narrowed concept, and committed direction.",
+        "changes": ["Created from ledger v6 + Phase 3 sharpened framing + Phase 4 recommendation"]
+      }
+    ]
+  },
+
+  "owner": {
+    "role": "Backend engineer",
+    "experience_years": 8,
+    "primary_stack": "Java / Spring Boot",
+    "current_status": "On the bench, time-rich but window is finite",
+    "subscriptions": ["Claude", "ChatGPT", "Gemini"],
+    "api_credits": ["OpenAI prepaid"],
+    "prior_personal_projects": 0,
+    "prior_personal_projects_note": "First-ever side project. Load-bearing fact for risk assessment.",
+    "learning_goal": "Become hireable in the AI age; move beyond Java-only resume"
+  },
+
+  "problem": {
+    "headline": "Parallel deliberation across multiple consequential life decisions creates cognitive load that causes important threads to be dropped or postponed indefinitely.",
+    "user_quote": "the pain comes from not once single are but the fact i have to think of such critical ideas/decisions in paralell",
+    "trigger": "Two months of circling; specifically procrastinating on weight loss and finance goals",
+    "decision_categories": [
+      {
+        "name": "Career / skill futureproofing",
+        "examples": ["AI learning pathways", "Azure AI-900 study plan"],
+        "stakes": "high",
+        "frequency": "low"
+      },
+      {
+        "name": "Personal finance / major purchases",
+        "examples": ["Marriage savings", "House purchase savings/strategy"],
+        "stakes": "high",
+        "frequency": "low"
+      },
+      {
+        "name": "Immigration",
+        "examples": ["Canadian PR via CEC vs PNP through Deloitte"],
+        "stakes": "high",
+        "frequency": "low"
+      },
+      {
+        "name": "Health",
+        "examples": ["Weight loss planning"],
+        "stakes": "medium",
+        "frequency": "ongoing"
+      },
+      {
+        "name": "Practical / everyday",
+        "examples": ["2021 Hyundai Elantra bumper damage decision (sell/repair/keep/downgrade/no-car)", "Whether to attend a Deloitte dinner party"],
+        "stakes": "low-to-medium",
+        "frequency": "high"
+      }
+    ],
+    "marriage_example": {
+      "purpose": "Clearest articulation of the kind of question the system must handle",
+      "parent_question": "How do I save for marriage next year?",
+      "fan_out_subquestions": [
+        "How much do I need to save?",
+        "What are my current expenses?",
+        "What can I realistically save monthly?",
+        "What are typical Indian wedding costs?",
+        "What are my parents' expectations?",
+        "How much gold do I need to buy?",
+        "When can her brother and sister take vacation?",
+        "How do these constraints interact?"
+      ],
+      "user_quote": "so many questions come from this one simple question. and i need to answer and think of them all dont I ?"
+    }
+  },
+
+  "vision": {
+    "north_star": "An AI companion/coach that deeply understands me and helps me grow",
+    "current_step": "Step 1 of that vision: build the decision-support brain",
+    "future_steps_aspirational": [
+      "Voice/dictaphone interface",
+      "Mobile app",
+      "Tool suite (finance, health, calendar) the AI can call",
+      "Closed beta to 10-20 friends via Google Play",
+      "Eventually a startup"
+    ],
+    "future_steps_status": "Aspirational only. Not in scope for v1. Documented to preserve intent."
+  },
+
+  "success_and_failure": {
+    "success_definition": "I am more technically apt and hireable in the AI age AND the app solves a real problem",
+    "success_status": "revised",
+    "_superseded": {
+      "success_definition_v1": {
+        "value": "Friends are addicted to it; closed beta of 10-20 via Google Play",
+        "superseded_on": "2026-04-14",
+        "reason": "User clarified this was loose phrasing; real success metric is skill growth + real-problem-solving"
+      }
+    },
+    "failure_definition": "Opposite of success: doesn't grow my skills and doesn't solve a real problem",
+    "quit_conditions": [
+      {
+        "id": "quit_1",
+        "condition": "Doesn't add value to my personal skills or resume",
+        "mitigation": "Building the narrow agent loop teaches agent patterns, cost-aware routing, structured prompting, context engineering. Resume value is locked in on day 1 of building, independent of product outcome.",
+        "status": "mitigated"
+      },
+      {
+        "id": "quit_2",
+        "condition": "Too costly where the quality isn't better than Claude",
+        "mitigation": "Single-model + routing keeps cost under $50/mo ceiling. Quality bar is narrowed: only needs to beat Claude on multi-domain personal-context research, not on conversational queries.",
+        "status": "mitigated"
+      }
+    ]
+  },
+
+  "constraints": {
+    "budget_monthly_api_usd": {
+      "value": 50,
+      "type": "hard_ceiling",
+      "user_quote": "if it really works, I would think 50 dollars is my ceiling",
+      "context": "Reframed against ~$100/mo Uber Eats and ~$80/mo existing AI subscriptions"
+    },
+    "latency": {
+      "long_research_mode": {
+        "tolerance": "overnight",
+        "status": "confirmed"
+      },
+      "short_research_mode": {
+        "status": "deferred",
+        "note": "User initially said 10-15 min; on reflection dropped short mode entirely from v1 scope. Conversational quick questions go to Claude.ai directly.",
+        "_superseded": {
+          "value": "10-15 minutes",
+          "superseded_on": "2026-04-14",
+          "reason": "Bucket failed the 'would I actually wait' test; user agreed to start with long mode only"
+        }
+      }
+    },
+    "time_budget": {
+      "current": "Effectively unlimited (on bench)",
+      "duration": "Finite; ends when user is staffed on a client or starts interviews",
+      "implication": "Use the window aggressively"
+    },
+    "privacy_and_storage": {
+      "user_stance": "I want it to know everything, even minute details",
+      "stance_status": "untested",
+      "stance_note": "Acknowledged as needing refinement. 'Know everything' is an emotional stance; in practice memory should be selective.",
+      "preferred_location_v1": "Local-on-device (SQLite or flat file)",
+      "preferred_location_rationale": "Sidesteps PIPEDA/GDPR liability for solo dev, aligns with 'know everything' by self-insurance, zero hosting cost, simpler",
+      "off_limits_categories": [],
+      "off_limits_note": "User declared no categories off-limits"
+    }
+  },
+
+  "preferences": {
+    "advise_vs_act_now": 1,
+    "advise_vs_act_target": 5,
+    "advise_vs_act_scale": "1 = pure advisor, 5 = autonomous agent acting in the world",
+    "better_answer_ranked": [
+      "more personalized to my context",
+      "more thoroughly reasoned (trade-offs, alternatives, what could go wrong)",
+      "more accurate / less hallucinated",
+      "less biased / less sycophantic",
+      "more defensible (could justify decision later)",
+      "faster"
+    ],
+    "predicted_usage": "Daily (option a) - intended as default thinking surface",
+    "predicted_usage_status": "untested",
+    "current_workflow_for_real_decisions": [
+      "Ask Claude/ChatGPT/Gemini directly",
+      "Run deep research features",
+      "Ask people and lawyers (e.g. for PR question)"
+    ]
+  },
+
+  "assumptions": [
+    {
+      "id": "A1",
+      "claim": "Personal DB + RAG materially reduces hallucinations and produces meaningfully better answers than strong single-model with good context",
+      "status": "untested",
+      "verdict": "Premature. Hand-curated context file gets 70-80% of the benefit at 5% of complexity. RAG earns its keep at hundreds of documents, which is years away for personal use."
+    },
+    {
+      "id": "A2",
+      "claim": "Multi-model critique (council of 3) produces better answers than single strong model",
+      "status": "untested",
+      "verdict": "Mostly theater for this use case. Real value the user observes from manual cross-posting comes from the human-in-the-loop iterating, not from models judging each other. Defer indefinitely."
+    },
+    {
+      "id": "A3",
+      "claim": "Can build competitive deep research from scratch",
+      "status": "refuted",
+      "verdict": "Reframe: not building OpenAI/Gemini/Claude/Perplexity Deep Research clones. Building Karpathy-style overnight agent runs that decompose a question against personal context."
+    },
+    {
+      "id": "A4",
+      "claim": "More memory is monotonically better (know everything)",
+      "status": "untested",
+      "verdict": "False at scale. Stale facts and signal-to-noise problems emerge. Useful memory = stable identity + current goals + recent decisions and outcomes. Not 'everything'."
+    },
+    {
+      "id": "A5",
+      "claim": "I will use this daily as my default thinking surface",
+      "status": "untested",
+      "verdict": "Uncertain. 8 years of not building for self is the base rate against. Bench window and narrow scope improve odds."
+    },
+    {
+      "id": "A6",
+      "claim": "10-20 friends addicted = startup validation",
+      "status": "deferred",
+      "verdict": "Friends are kind, share biases, and onboarding cost (telling it 'everything') is huge. Useful as forcing function only. Removed from v1."
+    },
+    {
+      "id": "A7",
+      "claim": "$50/mo is enough to run the system",
+      "status": "conditionally_true",
+      "verdict": "Yes, with single-model + cost-aware routing (cheap model for simple sub-queries, frontier for decomposition/synthesis). 1 overnight run/week ~ $5-20/mo."
+    },
+    {
+      "id": "A8",
+      "claim": "Brain first, tool suite later is the right order",
+      "status": "confirmed",
+      "verdict": "Correct ordering. Just needs the brain itself defined narrowly."
+    }
+  ],
+
+  "open_flags": [
+    {
+      "id": "flag_A",
+      "description": "First-ever side project + startup ambition + coach-scale vision = scope tension",
+      "resolution": "Resolved by Phase 4 narrowing; revisit only if scope creeps"
+    },
+    {
+      "id": "flag_B",
+      "description": "Motivation stack contains 3+ divergent goals (learn AI / build business / reduce decision load / step toward coach)",
+      "resolution": "North star for v1 = learn AI + reduce own decision load. Business/coach are deferred."
+    },
+    {
+      "id": "flag_C",
+      "description": "Originally large surface area for a first project",
+      "resolution": "Resolved by Phase 4 narrow scope"
+    },
+    {
+      "id": "flag_D",
+      "description": "10-15 min 'short mode' is neither short nor deep",
+      "resolution": "Short mode dropped from v1"
+    },
+    {
+      "id": "flag_E",
+      "description": "Learning value is a load-bearing success criterion (resume), not a side benefit",
+      "resolution": "Acknowledged; informs build-vs-buy (favors build)"
+    },
+    {
+      "id": "flag_F",
+      "description": "Original success/quit conditions were mismatched (friends-addicted vs resume)",
+      "resolution": "Resolved by revised success metric"
+    },
+    {
+      "id": "flag_G",
+      "description": "Current workflow already includes humans (lawyers); system replaces LLM layer not human layer",
+      "resolution": "Acknowledged; system is augmentation not replacement"
+    },
+    {
+      "id": "flag_H",
+      "description": "Belief that personal DB + RAG = better answers is stated as fact but untested",
+      "resolution": "Treat as untested; v1 uses curated markdown not RAG"
+    }
+  ],
+
+  "concept_v1": {
+    "name": "Narrow personal-context overnight research agent",
+    "audience": "Technical professionals (starting with the user) running multiple parallel high-stakes life deliberations who already triangulate manually across LLMs, research, and human experts",
+    "exact_problem": "One big life question decomposes into a web of sub-questions across finance, culture, family, timing, logistics, legal - each needing real personal context to answer usefully. Currently done in head, manually chased across tools, stitched together by hand. Hours of work and synthesis lives only in the user's head.",
+    "job_to_be_done": "When I have a multi-domain life decision that matters, help me decompose it into the right sub-questions, research each thread against my actual situation, and give me back one synthesized 2-page answer I can act on - with the full audit trail preserved if I want to dig.",
+    "when_useful": [
+      "Low-frequency, high-stakes, multi-domain decisions",
+      "Marriage / house / PR / career-pivot class questions"
+    ],
+    "when_not_useful": [
+      "Quick facts, code help, casual chat, creative writing - these go to Claude.ai directly"
+    ],
+    "why_existing_tools_insufficient": [
+      {
+        "tool": "Claude Projects / Custom GPTs",
+        "gap": "Hold static context but don't decompose or run multi-step research autonomously"
+      },
+      {
+        "tool": "OpenAI / Gemini / Claude / Perplexity Deep Research",
+        "gap": "Decompose and research well but stateless about the user - don't know income, family, cultural context, timeline"
+      },
+      {
+        "tool": "Claude Code / Cursor agent loops",
+        "gap": "Built for coding, not personal decision support"
+      },
+      {
+        "tool": "Mem / Rewind / Personal.ai",
+        "gap": "Know the user but don't reason deeply or run research agents"
+      }
+    ],
+    "differentiator": "Combines personal context (knows the user) with autonomous multi-step decomposition + research (Karpathy-style overnight agent loop). Nothing on the market combines both for consumers.",
+    "must_haves": [
+      {
+        "id": "mh_1",
+        "name": "Hand-curated personal context file",
+        "detail": "Markdown, 2-3 pages, user-maintained. No RAG, no extraction, no graph DB.",
+        "rationale": "Lowest-cost way to get 70-80% of personalization benefit; teaches what categories actually matter before committing to infrastructure"
+      },
+      {
+        "id": "mh_2",
+        "name": "Question decomposition step",
+        "detail": "Model takes parent question + context file, emits a tree of sub-questions with a reasoning plan",
+        "rationale": "The core differentiator; mimics user's natural deliberation process"
+      },
+      {
+        "id": "mh_3",
+        "name": "Overnight research loop",
+        "detail": "Agent loop works through sub-questions one at a time, uses web search where needed, preserves intermediate findings",
+        "rationale": "Karpathy-style; the actual mechanism that justifies the wait"
+      },
+      {
+        "id": "mh_4",
+        "name": "Synthesis pass",
+        "detail": "One model reads all intermediate findings + context file, produces 2-page summary with recommendation",
+        "rationale": "Matches user's stated output preference"
+      },
+      {
+        "id": "mh_5",
+        "name": "Audit trail preserved",
+        "detail": "Intermediate sub-answers live in a file the user can open later",
+        "rationale": "Reviewing the system's reasoning is how the user learns from it; satisfies the resume/learning quit condition"
+      },
+      {
+        "id": "mh_6",
+        "name": "Text interface only",
+        "detail": "Terminal, CLI, or dead-simple local web UI. No mobile, no voice, no Play Store.",
+        "rationale": "Anything else is scope creep on a first project"
+      },
+      {
+        "id": "mh_7",
+        "name": "Cost-aware model routing",
+        "detail": "Cheap model (Haiku/mini class) for simple sub-queries; frontier model for decomposition and synthesis",
+        "rationale": "Keeps under $50/mo ceiling; also a resume-grade skill"
+      }
+    ],
+    "non_goals_v1": [
+      "Multi-model critique / council deliberation",
+      "Automatic memory extraction",
+      "Vector RAG",
+      "GraphRAG / tree-node memory (interesting, deferred)",
+      "Voice interface",
+      "Mobile app",
+      "Android / Play Store",
+      "Beta to friends",
+      "Short / conversational mode",
+      "Tool suite (finance, health, calendar)",
+      "Autonomous actions in the world",
+      "Daily-use chatbot framing"
+    ]
+  },
+
+  "mvp_plan": {
+    "scope_estimate_lines_of_code": "500-1500",
+    "estimated_build_window_weeks": "2-4 (3 as checkpoint)",
+    "estimated_cost_per_run_usd": "1-4",
+    "estimated_monthly_cost_usd": "5-20 at 1 run/week",
+    "language_recommendation": "Python (velocity over signal; user already knows Java)",
+    "components": [
+      "Read context.md from disk",
+      "Accept parent question via CLI or text file",
+      "Call frontier model to produce decomposition plan",
+      "Run agent loop through sub-questions with web search as the only tool",
+      "Write intermediate findings to timestamped folder",
+      "Produce final summary.md with 2-page answer"
+    ],
+    "evaluation_set": [
+      "Marriage savings strategy",
+      "Canadian PR: CEC vs PNP",
+      "TBD: one more real high-stakes question"
+    ],
+    "validation_test": "Did the reports help me think better about these decisions, even if I didn't fully act on them? Yes = validated, No = stop and learn from why."
+  },
+
+  "phase_4_recommendation": {
+    "label": "Promising if narrowly scoped",
+    "chosen_direction": "Narrow the concept sharply to the one part that's genuinely differentiated",
+    "rejected_alternatives": {
+      "drop_idea": "The marriage example shows real gap Claude.ai doesn't fill in one shot",
+      "use_existing_product": "No existing product combines personal context + autonomous multi-step research; learning goal only met by building",
+      "validate_manually_first": "User already manually validated for 2 months; more is procrastination",
+      "continue_exploring": "Exploration without committed build is how side projects die",
+      "proceed_to_full_design": "Current scope is 4x too big for first project"
+    },
+    "probability_still_using_at_6mo": 0.45,
+    "rationale": "High for a first personal project; only that high because of bench window + real underlying pain + narrow scope"
+  },
+
+  "commitments": [
+    {
+      "id": "c_1",
+      "step": "Spend one week inside Claude Projects with a hand-written 2-page context.md",
+      "deliverables": ["context.md", "gaps.md (what Projects gives me, what it fails to give me)"],
+      "questions_to_run": ["Marriage savings", "PR: CEC vs PNP", "One more TBD"],
+      "rationale": "Establish baseline the custom build must beat",
+      "status": "pending",
+      "skipping_risk": "Without this baseline, no way to know if the custom build is actually better than what's already paid for"
+    },
+    {
+      "id": "c_2",
+      "step": "Commit to a 3-week build window for v1",
+      "stop_condition": "If v1 isn't producing usable overnight reports by end of week 3, stop and reassess (not push harder)",
+      "status": "pending"
+    },
+    {
+      "id": "c_3",
+      "step": "Pre-pick three real questions as evaluation set",
+      "status": "pending"
+    },
+    {
+      "id": "c_4",
+      "step": "Do not tell friends about it until v1 passes the three-question test",
+      "rationale": "Premature beta burns social capital",
+      "status": "pending"
+    },
+    {
+      "id": "c_5",
+      "step": "Keep a build log (dated markdown, what tried, what worked, what didn't)",
+      "rationale": "Resume currency independent of product outcome",
+      "status": "pending"
+    }
+  ],
+
+  "market_context": {
+    "personal_knowledge_with_llm": ["Mem.ai", "Reflect Notes", "Notion AI", "Obsidian + Smart Connections / Copilot plugins", "Personal.ai", "Rewind.ai", "Limitless.ai"],
+    "agentic_deep_research": ["OpenAI Deep Research", "Gemini Deep Research", "Perplexity Pro Research", "Claude Research", "You.com Research", "Exa", "Elicit"],
+    "multi_agent_frameworks": ["LangGraph", "CrewAI", "AutoGen", "LlamaIndex Workflows", "OpenAI Swarm"],
+    "ai_coaches_companions": ["Rocky.ai", "Replika", "Pi (Inflection/Microsoft)", "Stella", "Wysa"],
+    "structured_memory_systems": ["GraphRAG (Microsoft)", "memary", "Zep temporal knowledge graph", "Letta (formerly MemGPT)"],
+    "research_evidence": [
+      {
+        "topic": "Multi-agent debate effectiveness",
+        "key_papers": ["Du et al. 2023 'Improving Factuality and Reasoning via Multiagent Debate'", "Smit et al. 2024 follow-up"],
+        "summary": "Original positive result has not held up cleanly. Effect smaller and more fragile than first reported. Single strong model with self-critique often matches."
+      }
+    ],
+    "summary": "Vision (combine all four buckets) is uncrowded. Components are crowded. Edge will come from integration and taste, not new capability."
+  },
+
+  "open_questions": [
+    {
+      "id": "oq_1",
+      "question": "Which language: Python (velocity) or Java/Spring (reuse existing skill, less learning)?",
+      "current_lean": "Python - learning value > velocity"
+    },
+    {
+      "id": "oq_2",
+      "question": "Which agent framework, if any, vs hand-rolled loop?",
+      "current_lean": "Hand-rolled for learning; revisit if pain emerges"
+    },
+    {
+      "id": "oq_3",
+      "question": "Third evaluation question (after marriage savings and PR)?",
+      "current_lean": "TBD by user"
+    },
+    {
+      "id": "oq_4",
+      "question": "When (if ever) to introduce structured memory beyond curated markdown?",
+      "current_lean": "Only when markdown cracks; document failure modes when it does"
+    }
+  ],
+
+  "out_of_scope_for_now_revisit_later": {
+    "trigger_to_revisit": "After v1 passes the three-question validation test",
+    "items": [
+      "Voice / dictaphone interface",
+      "Mobile app (Android first per user preference)",
+      "Closed beta to 10-20 friends via Play Store",
+      "Tool suite: finance categorization, health dashboard, calendar integration",
+      "Multi-model orchestration",
+      "Automatic memory extraction pipeline",
+      "Graph / tree-node memory storage",
+      "Move from local storage to user-controlled cloud DB",
+      "Move from advisor (1) toward autonomous agent (5) on the action scale"
+    ]
+  }
+}
