@@ -108,6 +108,19 @@ The learning value (agent patterns, cost-aware routing, structured prompting, co
 
 The canonical source of truth for this project lives in [`Spec.json`](./Spec.json). It contains the full problem framing, assumptions and their verdicts, open questions, constraints, and the phase-by-phase reasoning that produced the v1 design. All future design and build conversations should be grounded in it.
 
+Ideas being considered but not yet promoted to the spec live in [`Whiteboard.md`](./Whiteboard.md) — the working memory.
+
+---
+
+## Changelog
+
+Notable direction changes and doc updates. Field-level spec changes are tracked inside `Spec.json` under `meta.changelog`.
+
+- **2026-04-15** — Added `Whiteboard.md` as staging ground for ideas before they enter the spec. Added `.claude/settings.json` with project-scoped permissions (git ops allowed, pushes restricted to `develop`, destructive/install/network ops denied).
+- **2026-04-15** — Accepted two reframings (logged in `Whiteboard.md`): (1) the research run's output becomes a *queryable source-grounded artifact* rather than a one-shot 2-page report; (2) refined the "daily-use chatbot" non-goal to specifically exclude general-purpose companionship, not purposeful event-driven interaction.
+- **2026-04-14** — Rewrote README from placeholder to full project overview grounded in `Spec.json`.
+- **2026-04-14** — Initial spec extracted from Phase 1-4 ideation interview (`Spec.json` v0.1.0).
+
 ---
 
 *Codename: `second-brain` — v0.1.0*
