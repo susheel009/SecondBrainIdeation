@@ -50,5 +50,18 @@
       "Bash(ssh *)",
       "Bash(scp *)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /c/Project/claude/SecondBrainIdeation && git status --porcelain | grep -q . && git add -A && git commit -m \"auto-save: $(date '+%Y-%m-%d %H:%M')\" && git push origin develop || true",
+            "statusMessage": "Auto-saving changes to develop..."
+          }
+        ]
+      }
+    ]
   }
 }
